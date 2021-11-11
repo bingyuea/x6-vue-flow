@@ -1,63 +1,81 @@
 <template>
-  <div style="display: flex;flex-direction: row;height: 54px;">
-    <div style="display: flex;flex-direction: row;flex: 1;height: 54px;"> 
+  <div class='toolbarOptions'>
+    <div class='file_toolbar'>
+      <a-menu v-model="current" mode="horizontal">
+        <a-menu-item key="mail">
+          <a-icon type="folder"/>
+          文件
+        </a-menu-item>
+        <a-menu-item key="app">
+          <a-icon type="setting"/>
+          操作
+        </a-menu-item>
+        <a-sub-menu>
+        <span slot="title" class="submenu-title-wrapper"
+        >
+          <a-icon type="tool"/>
+          工具包</span
+        >
+          <a-menu-item-group title="Item 1">
+            <a-menu-item key="setting:1">
+              Option 1
+            </a-menu-item>
+          </a-menu-item-group>
+        </a-sub-menu>
+        <a-menu-item key="alipay">
+          <a-icon type="question-circle"/>
+          帮助
+        </a-menu-item>
+      </a-menu>
+    </div>
 
+    <div class="editor_toolbar">
+      <toolbarItem></toolbarItem>
     </div>
-    <div style=" display: flex;flex: 3;">
-     
-      <ToolbarButton  command="delete"  label="删除" text="&#xe624;"  @handleEvent="()=>{this.$emit('delFunc')}"/>
-      <ToolbarButton  command="zoomIn" label="放大" text="&#xe62b;" />
-      <ToolbarButton  command="zoomOut" label="缩小" text="&#xe62e;"  />
-      <ToolbarButton   label="全屏" text="&#xe629;"  />
-      <ToolbarButton   label="原大小" text="&#xe627;"  />
-      <ToolbarButton  command="zoomToFit" label="自适应" text="&#xe625;" />
-    </div>
-    <div class="pull-right">
-      
+
+    <div>
+<!--      <ToolbarButton command="delete" label="删除" text="&#xe624;"/>
+      <ToolbarButton command="zoomIn" label="放大" text="&#xe62b;"/>
+      <ToolbarButton command="zoomOut" label="缩小" text="&#xe62e;"/>
+      <ToolbarButton label="全屏" text="&#xe629;"/>
+      <ToolbarButton label="原大小" text="&#xe627;"/>
+      <ToolbarButton command="zoomToFit" label="自适应" text="&#xe625;"/>-->
     </div>
   </div>
-</template>
-<script>
-import ToolbarButton from './ToolbarButton'
-import FlowGraph from '../../Graph'
-export default {
-  name: 'FlowToolbar',
-  components:{
-    ToolbarButton
-  },
-  data(){
-    return {
-      shapeContext: '&#xe631;'
-    }
-  },
-  props: ["title",'chartData',  'readOnly','allowCopyPaste',
-    'allowReUndo',"allowOrAnyGroup","allowAnyGroup","allowOrGroup","allowClear","allowGroup","allowUnGroup"],
-  methods:{
 
-  }
+</template>
+<script lang="ts">
+// import ToolbarButton from './ToolbarButton.vue'
+import {Component, Prop, Vue} from "vue-property-decorator";
+import toolbarItem from "./toolbarItem.vue";
+
+@Component({
+  name: 'toolbar',
+  components: {
+    // ToolbarButton,
+    toolbarItem
+  },
+})
+export default class extends Vue {
+  @Prop() private msg!: string;
+  current = ['mail']
 }
 </script>
-<style lang="less">
-@font-face {
-  font-family: 'iconfont-editor';
-  src: url('../../../assets/iconfont/t_iconfont.eot'); /* IE9*/
-  src: url('../../../assets/iconfont/t_iconfont.eot#iefix')
-      format('embedded-opentype'),
-    /* IE6-IE8 */ url('../../../assets/iconfont/t_iconfont.woff') format('woff'),
-    /* chrome, firefox */ url('../../../assets/iconfont/t_iconfont.woff2')
-      format('woff2'),
-    /* chrome, firefox */ url('../../../assets/iconfont/t_iconfont.ttf')
-      format('truetype'),
-    /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-      url('../../../assets/iconfont/t_iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
-}
-.iconfont-editor {
-  font-family: 'iconfont-editor' !important;
-  font-size: 19px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  cursor: pointer;
-  color: #fff;
+
+<style lang='less'>
+.toolbarOptions {
+  .file_toolbar, .editor_toolbar {
+    &_item {
+      display: inline-block;
+      min-width: 25px;
+      height: 15px;
+      line-height: 15px;
+      vertical-align: middle;
+      text-align: center;
+      margin: 0 2px;
+      color: #000000;
+      font-size: 17px;
+    }
+  }
 }
 </style>

@@ -14,22 +14,19 @@ export default class FlowGraph {
       container: document.getElementById('container')!,
       width: 0,
       height: 0,
-      // scroller: {
-      //   enabled: true,
-      // },
       grid: {
         size: 10,
         visible: true,
         type: 'doubleMesh',
         args: [
           {
-            color: '#cccccc',
+            color: '#E7E8EA',
             thickness: 1,
           },
           {
-            color: '#5F95FF',
+            color: '#CBCED3',
             thickness: 1,
-            factor: 4,
+            factor: 5,
           },
         ],
       },
@@ -41,7 +38,6 @@ export default class FlowGraph {
         showNodeSelectionBox: true,
         filter: (node) => {
           const data = node.getData() as any
-          //console.info('datadata', data)
           return !(data && data.parent)
         },
       },

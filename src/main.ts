@@ -1,11 +1,10 @@
-import GenoAnyEditor from './App.vue'
-import Vue from 'vue'
+import x6Editor from './App.vue'
 const install = (Vue: any) => {
-  Vue.component(GenoAnyEditor.name, GenoAnyEditor)
+  Vue.component(x6Editor.name, x6Editor)
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-export { GenoAnyEditor }
+export { x6Editor }
