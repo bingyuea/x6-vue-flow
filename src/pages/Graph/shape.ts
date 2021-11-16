@@ -9,11 +9,11 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
       // strokeWidth: 1,
       strokeWidth: 0,
       // fill: 'rgba(95,149,255,0.05)',
-      fill: '#D9D9D9',
+      fill: '#D9D9D9'
     },
     fo: {
       refWidth: '100%',
-      refHeight: '100%',
+      refHeight: '100%'
     },
     foBody: {
       xmlns: Dom.ns.xhtml,
@@ -22,8 +22,8 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
         height: '100%',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-      },
+        alignItems: 'center'
+      }
     },
     'edit-text': {
       contenteditable: 'true',
@@ -33,23 +33,23 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
         textAlign: 'center',
         fontSize: 12,
         // color: 'rgba(0,0,0,0.85)',
-        fill: '#000000',
-      },
+        fill: '#000000'
+      }
     },
     text: {
       fontSize: 12,
       // fill: 'rgba(0,0,0,0.85)',
-      fill: '#000000',
-    },
+      fill: '#000000'
+    }
   },
   markup: [
     {
       tagName: 'rect',
-      selector: 'body',
+      selector: 'body'
     },
     {
       tagName: 'text',
-      selector: 'text',
+      selector: 'text'
     },
     {
       tagName: 'foreignObject',
@@ -62,12 +62,12 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
           children: [
             {
               tagName: 'div',
-              selector: 'edit-text',
-            },
-          ],
-        },
-      ],
-    },
+              selector: 'edit-text'
+            }
+          ]
+        }
+      ]
+    }
   ],
   ports: {
     groups: {
@@ -81,10 +81,10 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       right: {
         position: 'right',
@@ -96,10 +96,10 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       bottom: {
         position: 'bottom',
@@ -111,10 +111,10 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       left: {
         position: 'left',
@@ -126,27 +126,27 @@ export const FlowChartRect = Graph.registerNode('flow-chart-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
-      },
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
     },
     items: [
       {
-        group: 'top',
+        group: 'top'
       },
       {
-        group: 'right',
+        group: 'right'
       },
       {
-        group: 'bottom',
+        group: 'bottom'
       },
       {
-        group: 'left',
-      },
-    ],
-  },
+        group: 'left'
+      }
+    ]
+  }
 })
 
 export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
@@ -157,51 +157,51 @@ export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
     body: {
       stroke: '#5F95FF',
       strokeWidth: 1,
-      fill: 'rgba(95,149,255,0.05)',
+      fill: 'rgba(95,149,255,0.05)'
     },
     image: {
       'xlink:href': 'https://gw.alipayobjects.com/zos/antfincdn/FLrTNDvlna/antv.png',
       width: 16,
       height: 16,
       x: 12,
-      y: 12,
+      y: 12
     },
     title: {
-      text: 'Node',
+      text: 'Node1111111111',
       refX: 40,
       refY: 14,
       // fill: 'rgba(0,0,0,0.85)',
       fill: '#000000',
       fontSize: 12,
-      'text-anchor': 'start',
+      'text-anchor': 'start'
     },
     text: {
-      text: 'this is content text',
+      text: 'this is conten1111111111111t text',
       refX: 40,
       refY: 38,
       fontSize: 12,
       // fill: 'rgba(0,0,0,0.6)',
       fill: '#000000',
-      'text-anchor': 'start',
-    },
+      'text-anchor': 'start'
+    }
   },
   markup: [
     {
       tagName: 'rect',
-      selector: 'body',
+      selector: 'body'
     },
     {
       tagName: 'image',
-      selector: 'image',
+      selector: 'image'
     },
     {
       tagName: 'text',
-      selector: 'title',
+      selector: 'title'
     },
     {
       tagName: 'text',
-      selector: 'text',
-    },
+      selector: 'text'
+    }
   ],
   ports: {
     groups: {
@@ -215,10 +215,10 @@ export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       right: {
         position: 'right',
@@ -230,10 +230,10 @@ export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       bottom: {
         position: 'bottom',
@@ -245,10 +245,10 @@ export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       left: {
         position: 'left',
@@ -260,27 +260,27 @@ export const FlowChartImageRect = Graph.registerNode('flow-chart-image-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
-      },
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
     },
     items: [
       {
-        group: 'top',
+        group: 'top'
       },
       {
-        group: 'right',
+        group: 'right'
       },
       {
-        group: 'bottom',
+        group: 'bottom'
       },
       {
-        group: 'left',
-      },
-    ],
-  },
+        group: 'left'
+      }
+    ]
+  }
 })
 
 export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
@@ -291,19 +291,19 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
     body: {
       stroke: '#5F95FF',
       strokeWidth: 1,
-      fill: 'rgba(95,149,255,0.05)',
+      fill: 'rgba(95,149,255,0.05)'
     },
     head: {
       refWidth: '100%',
       stroke: 'transparent',
       height: 28,
-      fill: 'rgb(95,149,255)',
+      fill: 'rgb(95,149,255)'
     },
     image: {
       'xlink:href': 'https://gw.alipayobjects.com/zos/antfincdn/FLrTNDvlna/antv.png',
       height: 16,
       x: 6,
-      y: 6,
+      y: 6
     },
     title: {
       text: 'Node',
@@ -311,7 +311,7 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
       refY: 9,
       fill: '#ffffff',
       fontSize: 12,
-      'text-anchor': 'start',
+      'text-anchor': 'start'
     },
     text: {
       text: 'this is content text',
@@ -319,30 +319,30 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
       refY: 45,
       fontSize: 12,
       fill: 'rgba(0,0,0,0.6)',
-      'text-anchor': 'start',
-    },
+      'text-anchor': 'start'
+    }
   },
   markup: [
     {
       tagName: 'rect',
-      selector: 'body',
+      selector: 'body'
     },
     {
       tagName: 'rect',
-      selector: 'head',
+      selector: 'head'
     },
     {
       tagName: 'image',
-      selector: 'image',
+      selector: 'image'
     },
     {
       tagName: 'text',
-      selector: 'title',
+      selector: 'title'
     },
     {
       tagName: 'text',
-      selector: 'text',
-    },
+      selector: 'text'
+    }
   ],
   ports: {
     groups: {
@@ -356,10 +356,10 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       right: {
         position: 'right',
@@ -371,10 +371,10 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       bottom: {
         position: 'bottom',
@@ -386,10 +386,10 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
+              visibility: 'hidden'
+            }
+          }
+        }
       },
       left: {
         position: 'left',
@@ -401,27 +401,27 @@ export const FlowChartTitleRect = Graph.registerNode('flow-chart-title-rect', {
             strokeWidth: 1,
             fill: '#fff',
             style: {
-              visibility: 'hidden',
-            },
-          },
-        },
-      },
+              visibility: 'hidden'
+            }
+          }
+        }
+      }
     },
     items: [
       {
-        group: 'top',
+        group: 'top'
       },
       {
-        group: 'right',
+        group: 'right'
       },
       {
-        group: 'bottom',
+        group: 'bottom'
       },
       {
-        group: 'left',
-      },
-    ],
-  },
+        group: 'left'
+      }
+    ]
+  }
 })
 
 export const FlowChartAnimateText = Graph.registerNode('flow-chart-animate-text', {
@@ -432,33 +432,33 @@ export const FlowChartAnimateText = Graph.registerNode('flow-chart-animate-text'
     body: {
       stroke: '#5F95FF',
       strokeWidth: 1,
-      fill: 'rgba(95,149,255,0.05)',
+      fill: 'rgba(95,149,255,0.05)'
     },
     text1: {
       class: 'animate-text1',
       text: 'AntV X6',
-      fontSize: 32,
+      fontSize: 32
     },
     text2: {
       class: 'animate-text2',
       text: 'AntV X6',
-      fontSize: 32,
-    },
+      fontSize: 32
+    }
   },
   markup: [
     {
       tagName: 'rect',
-      selector: 'body',
+      selector: 'body'
     },
     {
       tagName: 'text',
-      selector: 'text1',
+      selector: 'text1'
     },
     {
       tagName: 'text',
-      selector: 'text2',
-    },
-  ],
+      selector: 'text2'
+    }
+  ]
 })
 
 export class NodeGroup extends Node {
@@ -494,15 +494,15 @@ NodeGroup.config({
   markup: [
     {
       tagName: 'rect',
-      selector: 'body',
+      selector: 'body'
     },
     {
       tagName: 'image',
-      selector: 'image',
+      selector: 'image'
     },
     {
       tagName: 'text',
-      selector: 'text',
+      selector: 'text'
     },
     {
       tagName: 'g',
@@ -512,19 +512,19 @@ NodeGroup.config({
           tagName: 'rect',
           selector: 'button',
           attrs: {
-            'pointer-events': 'visiblePainted',
-          },
+            'pointer-events': 'visiblePainted'
+          }
         },
         {
           tagName: 'path',
           selector: 'buttonSign',
           attrs: {
             fill: 'none',
-            'pointer-events': 'none',
-          },
-        },
-      ],
-    },
+            'pointer-events': 'none'
+          }
+        }
+      ]
+    }
   ],
   attrs: {
     body: {
@@ -534,26 +534,26 @@ NodeGroup.config({
       // fill: 'rgba(95,149,255,0.05)',
       fill: '#E9E9E9',
       // stroke: '#5F95FF',
-      stroke: '#CDCDCD',
+      stroke: '#CDCDCD'
     },
     image: {
       'xlink:href': require('../../assets/flow/group_open.png'),
       width: 16,
       height: 16,
       x: 8,
-      y: 12,
+      y: 12
     },
     text: {
       fontSize: 12,
       // fill: 'rgba(0,0,0,0.85)',
       fill: '#000000',
       refX: 30,
-      refY: 15,
+      refY: 15
     },
     buttonGroup: {
       refX: '100%',
       refX2: -25,
-      refY: 13,
+      refY: 13
     },
     button: {
       height: 14,
@@ -563,14 +563,14 @@ NodeGroup.config({
       fill: '#f5f5f5',
       stroke: '#ccc',
       cursor: 'pointer',
-      event: 'node:collapse',
+      event: 'node:collapse'
     },
     buttonSign: {
       refX: 3,
       refY: 2,
-      stroke: '#808080',
-    },
-  },
+      stroke: '#808080'
+    }
+  }
 })
 
 export class EdgeArrow extends Shape.Edge {}
@@ -579,34 +579,10 @@ EdgeArrow.config({
     line: {
       stroke: '#5F95FF',
       strokeWidth: 1,
-      targetMarker: {
-        name: 'classic',
-        size: 8,
-      },
-    },
+    }
   },
   router: {
-    name: 'manhattan',
-  },
+    name: 'manhattan'
+  }
 })
 
-export class EdgeTwoArrows extends Shape.Edge {}
-EdgeTwoArrows.config({
-  attrs: {
-    line: {
-      stroke: '#5F95FF',
-      strokeWidth: 1,
-      sourceMarker: {
-        name: 'classic',
-        size: 8,
-      },
-      targetMarker: {
-        name: 'classic',
-        size: 8,
-      },
-    },
-  },
-  router: {
-    name: 'manhattan',
-  },
-})

@@ -1,152 +1,108 @@
 <template>
-  <div style="width:100%;height:100%;">
-    <div class="color-picker-area"> </div>
-  </div>
+  <a-popover v-model="visible" trigger="click">
+    <template slot="content">
+      <div class="color-picker-box">
+        <Sketch class="sketch-picker" :value="color" :preset-colors="presetColors" @input="handleChange"></Sketch>
+        <div class="btn-block">
+          <a-button class="btn" type="default" size="small" @click="doHide">关闭</a-button>
+          <a-button class="btn" type="primary" size="small" @click="doConfirm">确认</a-button>
+        </div>
+      </div>
+    </template>
+    <slot></slot>
+  </a-popover>
 </template>
 
 <script>
-import Pickr from '@simonwep/pickr/dist/pickr.min.js'
-import '@simonwep/pickr/dist/themes/classic.min.css'
-import '@simonwep/pickr/dist/themes/monolith.min.css'
-import '@simonwep/pickr/dist/themes/nano.min.css'
-import $ from 'jquery'
+import { Sketch } from 'vue-color'
 export default {
   name: 'ColorPicker',
-  data() {
-    return {
-      colorPicker: null,
-      mycolor: this.color,
-      mydisabled: this.disabled,
-      isListenColorChange: true,
-    }
-  },
-  model: {
-    prop: 'color',
-    event: 'update',
+  components: {
+    Sketch
   },
   props: {
-    color: {
+    value: {
       type: String,
-      default: '#40E0D0',
+      default: ''
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+    presetColors: {
+      type: Array,
+      default: () => [
+        '#2d8cf0',
+        '#19be6b',
+        '#ff9900',
+        '#ed4014',
+        '#00b5ff',
+        '#19c919',
+        '#f9e31c',
+        '#ea1a1a',
+        '#9b1dea',
+        '#00c2b1',
+        '#ac7a33',
+        '#1d35ea',
+        '#8bc34a',
+        '#f16b62',
+        '#ea4ca3',
+        '#0d94aa',
+        '#febd79',
+        '#5d4037',
+        '#00bcd4',
+        '#f06292',
+        '#cddc39',
+        '#607d8b',
+        '#000000',
+        '#ffffff'
+      ]
+    }
+  },
+  data() {
+    return {
+      visible: false,
+      color: ''
+    }
   },
   watch: {
-    color(newVal) {
-      console.info('切换颜色')
-      this.isListenColorChange = false
-      this.mycolor = newVal
-      if (this.colorPicker) {
-        this.colorPicker.setColor(newVal, false)
-      }
-    },
-    disabled(newval) {
-      console.info('颜色花瓣', newval)
-      console.info('颜色花瓣1', this.colorPicker)
-      if (this.colorPicker && newval) {
-        this.colorPicker.disable()
-      } else if (this.colorPicker && !newval) {
-        this.colorPicker.enable()
-      }
-    },
-    mycolor(newVal, old) {
-      if (this.isListenColorChange && newVal != this.color) {
-        this.$emit('update', newVal)
-      }
-    },
-  },
-  mounted() {
-    this.colorPicker = Pickr.create({
-      //el: '.color-picker-area',
-      el: $(this.$el).find('.color-picker-area')[0],
-      theme: 'nano', // or 'monolith', or 'nano'
-      default: this.color,
-      swatches: [
-        'rgba(244, 67, 54, 1)',
-        'rgba(233, 30, 99, 0.95)',
-        'rgba(156, 39, 176, 0.9)',
-        'rgba(103, 58, 183, 0.85)',
-        'rgba(63, 81, 181, 0.8)',
-        'rgba(33, 150, 243, 0.75)',
-        'rgba(3, 169, 244, 0.7)',
-        'rgba(0, 188, 212, 0.7)',
-        'rgba(0, 150, 136, 0.75)',
-        'rgba(76, 175, 80, 0.8)',
-        'rgba(139, 195, 74, 0.85)',
-        'rgba(205, 220, 57, 0.9)',
-        'rgba(255, 235, 59, 0.95)',
-        'rgba(255, 193, 7, 1)',
-      ],
-
-      components: {
-        // Main components
-        preview: true,
-        opacity: true,
-        hue: true,
-        // Input / output Options
-        interaction: {
-          hex: true,
-          rgba: true,
-          hsla: false,
-          hsva: false,
-          cmyk: false,
-          input: true,
-          clear: false,
-          save: false,
-        },
-      },
-      // Button strings, brings the possibility to use a language other than English.
-      strings: {
-        save: '保存', // Default for save button
-        clear: '清空', // Default for clear button
-        cancel: '取消', // Default for cancel button
-      },
-    })
-    this.colorPicker.on('change', (color, instance) => {
-      var newcolor = color.toHEXA().toString()
-      this.colorPicker.applyColor(true)
-      this.isListenColorChange = true
-      this.mycolor = newcolor
-      //this.$emit('update', newcolor)
-    })
-    this.colorPicker.setColor(this.color, false)
-    if (this.disabled) {
-      this.colorPicker.disable()
-    } else {
-      this.colorPicker.enable()
+    value(val) {
+      const _t = this
+      _t.color = val
     }
   },
-  methods: {},
-  beforeDestroy() {
-    if (this.colorPicker) {
-      this.colorPicker.destroy()
+  methods: {
+    doHide() {
+      const _t = this
+      _t.visible = false
+      _t.$emit('on-close')
+    },
+    handleChange(val) {
+      const _t = this
+      _t.color = typeof val === 'object' && val.hasOwnProperty('hex8') ? val.hex8 : ''
+      _t.$emit('input', _t.color)
+    },
+    doConfirm() {
+      const _t = this
+      _t.$emit('on-change', _t.color)
+      _t.doHide()
     }
-  },
+  }
 }
 </script>
-<style scoped>
-.pcr-app[data-theme='nano'] .pcr-interaction {
-  display: inline;
-}
-.pcr-app[data-theme='nano'] .pcr-interaction .pcr-result {
-  text-align: center;
-  width: 15em;
-}
+<style scoped lang="less" rel="stylesheet/less">
+.color-picker-box {
+  position: relative;
+  .sketch-picker {
+    border: none;
+    box-shadow: none;
+  }
+  .btn-block {
+    text-align: right;
+    padding: 10px;
+    border-top: 1px solid #eee;
 
-.pcr-app[data-theme='nano'] .pcr-interaction input {
-  text-align: center;
-  width: 7.1em;
-}
-.pcr-app[data-theme='nano'] .pcr-interaction .pcr-save {
-  text-align: center;
-  width: 7.1em;
-}
-
-.pcr-app[data-theme='nano'] .pcr-interaction .pcr-clear {
-  text-align: center;
-  width: 7.1em;
+    .btn {
+      & + .btn {
+        margin-left: 10px;
+      }
+    }
+  }
 }
 </style>

@@ -13,11 +13,13 @@
     "@simonwep/pickr": "^1.7.4",
     "ant-design-vue": "1.4.9",
     "core-js": "^3.6.5",
+    "echarts": "^5.2.2",
     "immer": "^8.0.0",
     "lodash": "^4.17.20",
     "lodash-es": "^4.17.15",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
+    "vue-color": "^2.8.1",
     "vue-property-decorator": "^8.4.2"
   },
   "devDependencies": {

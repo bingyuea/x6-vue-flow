@@ -1,69 +1,67 @@
 <template>
-<!-- overflow-y:auto;max-height:100%;max-width:100%;padding-bottom:30px;user-select: none;width:294px; -->
-  <a-tree :treeData="nodeItems" style="height:100%;background-color:#F2F2F2;overflow-y: auto;  max-height: 100%;max-width:100%;padding-bottom:30px;user-select: none;"
-      @dragstart="dragstart" :draggable="true" @dragover="dragover" :multiple="false">
-      <a-icon slot="meh" type="smile-o" />
-      <template slot="title" slot-scope="{title}">
-        <div class="item item-flow-rect" style="user-select:none;">{{title}}</div>
-      </template>
-    </a-tree>
+  <!-- overflow-y:auto;max-height:100%;max-width:100%;padding-bottom:30px;user-select: none;width:294px; -->
+  <a-tree
+    :tree-data="nodeItems"
+    style="height:100%;background-color:#F2F2F2;overflow-y: auto;  max-height: 100%;max-width:100%;padding-bottom:30px;user-select: none;"
+    :draggable="true"
+    :multiple="false"
+    @dragstart="dragstart"
+    @dragover="dragover"
+  >
+    <a-icon slot="meh" type="smile-o" />
+    <template slot="title" slot-scope="{ title }">
+      <div class="item item-flow-rect" style="user-select:none;">{{ title }}</div>
+    </template>
+  </a-tree>
 </template>
 
 <script>
-
 import { generateUUID } from '../../../common/uuid'
 import dataNodeItems from './dataNodeItems'
 import { Graph, Addon, Shape } from '@antv/x6'
-import { FlowChartRect, FlowChartImageRect, FlowChartTitleRect, FlowChartAnimateText, NodeGroup } from '../../Graph/shape'
+import {
+  FlowChartRect,
+  FlowChartImageRect,
+  FlowChartTitleRect,
+  FlowChartAnimateText,
+  NodeGroup
+} from '../../Graph/shape'
 const { Rect, Circle } = Shape
 export default {
   name: 'EditorItemPanel',
-  components: {  },
-  props:[
-    'dnd'
-  ],
+  components: {},
+  props: ['dnd'],
   data() {
     return {
       seletedItem: null,
-      nodeItems:dataNodeItems,
+      nodeItems: dataNodeItems
     }
   },
-  created() {
-
-  },
-  watch: {
-
-  },
+  watch: {},
+  created() {},
   methods: {
-
-    dragstart({event, node}) {
-      this.seletedItem=null
+    dragstart({ event, node }) {
+      this.seletedItem = null
       this.findChildByKey(this.nodeItems, node.dataRef.key)
-        if (this.seletedItem) {
-           let node =new FlowChartRect( {
-              label:this.seletedItem.title,
-              data: this.seletedItem,
-              isNeedDel: true,
-              width: 81,
-              height: 45,
-              isAdd:true
-            })
-            this.dnd.start(node, event)
-            
-        }
+      if (this.seletedItem) {
+        let node = new FlowChartRect({
+          label: this.seletedItem.title,
+          data: this.seletedItem,
+          isNeedDel: true,
+          width: 81,
+          height: 45,
+          isAdd: true
+        })
+        this.dnd.start(node, event)
+      }
     },
-    dragover({event,node}){
-    },
+    dragover({ event, node }) {},
     findChildByKey(data, key) {
       data.some((item, index) => {
         if (item.key === key) {
           this.seletedItem = item
           return true
-        } else if (
-          item.children &&
-          item.children.length > 0 &&
-          !this.seletedItem
-        ) {
+        } else if (item.children && item.children.length > 0 && !this.seletedItem) {
           let result_new = null
           this.findChildByKey(item.children, key)
           if (this.seletedItem) {
@@ -71,8 +69,8 @@ export default {
           }
         }
       })
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -133,7 +131,7 @@ export default {
   .ant-tree-node-content-wrapper {
     user-select: none;
   }
-  .ant-tree-title{
+  .ant-tree-title {
     user-select: none;
   }
 }
