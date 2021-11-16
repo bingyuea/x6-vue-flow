@@ -31,6 +31,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import graph from '../../Graph/index'
+import { X6Line } from '../../Graph/edge/registerEdge'
 @Component({
   name: 'toolbarItem'
 })
@@ -57,9 +58,23 @@ export default class extends Vue {
     })
   }
   setLineColor(color: string) {
-    this.graph.drawBackground({
-      color
-    })
+    this.graph.createEdge = () => {
+      return new X6Line({
+        attrs: {
+          line: {
+            stroke: '#f0f',
+            strokeWidth: 1,
+            targetMarker: {
+              name: 'classic',
+              size: 8
+            }
+          }
+        },
+        router: {
+          name: 'manhattan'
+        }
+      })
+    }
   }
   handleClick(e: Event) {
     console.log(e)

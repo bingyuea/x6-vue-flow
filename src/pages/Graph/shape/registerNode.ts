@@ -1,7 +1,7 @@
-import { Graph, Dom, Node, Shape } from '@antv/x6'
+import { Graph } from '@antv/x6'
 import ports from '@/pages/Graph/config/ports'
 
-const X6Image = Graph.registerNode('X6Image', {
+export const X6Image = Graph.registerNode('X6Image', {
   inherit: 'image',
   attrs: {
     image: { 'xlink:href': '' }
@@ -33,6 +33,3 @@ const X6Image = Graph.registerNode('X6Image', {
     ]
   }
 })
-export default {
-  X6Image
-}

@@ -3,6 +3,7 @@ import portsStyle from '../config/ports'
 class Event {
   public static initEvent(graph) {
     graph.on('node:contextmenu', ({ e, x, y, cell, view }) => {
+
       cell.attr('text/style/display', 'none')
       const elem = view.container.querySelector('.x6-edit-text') as HTMLElement
       if (elem) {
@@ -12,7 +13,6 @@ class Event {
     graph.on(
       'node:mouseenter',
       FunctionExt.debounce(({ e, cell, view }) => {
-        console.log(e, cell, view)
         // 获取当前e的兄弟port
         const ports = document.querySelectorAll('.x6-port-body') as NodeListOf<SVGAElement>
         this.showPorts(ports, true)

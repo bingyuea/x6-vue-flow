@@ -15,19 +15,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import FlowGraph from './pages/Graph'
 import ToolBar from './pages/components/ToolBar/index.vue'
-import EditorItemPanel from './pages/components/Tree/ItemPanel.vue'
 import { Graph, Addon, Shape, Edge } from '@antv/x6'
-import * as echarts from 'echarts'
-import {
-  FlowChartRect,
-  FlowChartImageRect,
-  FlowChartTitleRect,
-  FlowChartAnimateText,
-  NodeGroup,
-  EdgeArrow
-} from './pages/Graph/shape'
-import { EmbeddedImage } from '@antv/x6/lib/shape/standard'
-import EditorDetailPanel from './pages/components/ConfigPanel/index.vue'
+import { FlowChartRect, NodeGroup, EdgeArrow } from './pages/Graph/shape'
+
 const { Dnd } = Addon
 
 @Component({
@@ -52,55 +42,6 @@ export default class extends Vue {
         animation: true,
         validateNode: this.validate,
         getDropNode: this.dragNode
-      })
-
-      this.graph.on('edge:connected', item => {
-        //edge
-        if (item.edge) {
-          //1. 处理模式
-          //a. 获取节点目标终节点
-          //item.edge.target.cell
-          let target = this.graph.getCell(item.edge.target?.cell)
-          let source = this.graph.getCell(item.edge.source?.cell)
-          if (!target || !source) return
-          console.info('添加完成')
-          //目标为or模式
-          if (target.getData()?.groupType == 100) {
-            //1.设置当前lineType
-            item.edge.setData({ ...item.edge.getData(), lineType: 100 })
-            //or模式，需要自动添加其他组内连接点
-            let groupNodes = this.graph.getNodes().filter(t => t.parent == target.parent && t.id != target.id)
-            groupNodes.forEach(item => {
-              let findEdge = this.graph.getEdges().filter(p => p.source.cell == source.id && p.target.cell == item.id)
-              if (findEdge.length <= 0) {
-                let tedge = this.graph.addEdge(
-                  new EdgeArrow({
-                    source: { cell: source.id, port: source.getPorts().find(t => t.group == 'bottom')?.id },
-                    target: { cell: item.id, port: item.getPorts().find(t => t.group == 'top')?.id },
-                    data: { lineType: 100 }
-                  })
-                )
-              }
-            })
-          } else if (source.getData()?.groupType == 100) {
-            //1.设置当前lineType
-            item.edge.setData({ ...item.edge.getData(), lineType: 100 })
-            //or模式，需要自动添加其他组内连接点
-            let groupNodes = this.graph.getNodes().filter(t => t.parent == source.parent && t.id != source.id)
-            groupNodes.forEach(item => {
-              let findEdge = this.graph.getEdges().filter(p => p.source.cell == item.id && p.target.cell == target.id)
-              if (findEdge.length <= 0) {
-                let tedge = this.graph.addEdge(
-                  new EdgeArrow({
-                    source: { cell: item.id, port: item.getPorts().find(t => t.group == 'bottom')?.id },
-                    target: { cell: target.id, port: target.getPorts().find(t => t.group == 'top')?.id },
-                    data: { lineType: 100 }
-                  })
-                )
-              }
-            })
-          }
-        }
       })
       this.graph.on('edge:removed', item => {})
       this.getContainerSize()

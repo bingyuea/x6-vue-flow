@@ -1,6 +1,8 @@
 import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
 import { X6Image } from './shape/registerNode'
+import { X6Line } from './edge/registerEdge'
 console.log(X6Image)
+console.log(X6Line)
 import graphData from './data'
 import fireWallIcon from '../icons/fireWall.png'
 import networkCloudIcon from '../icons/network_cloud.png'
@@ -63,18 +65,7 @@ export default class graph {
         dangling: false,
         router: 'manhattan',
         createEdge() {
-          return new Shape.Edge({
-            attrs: {
-              line: {
-                stroke: '#5F95FF',
-                strokeWidth: 1,
-                targetMarker: {
-                  name: 'classic',
-                  size: 8
-                }
-              }
-            }
-          })
+          return new X6Line()
         },
         validateConnection({ sourceView, targetView, sourceMagnet, targetMagnet }) {
           if (sourceView === targetView) {
