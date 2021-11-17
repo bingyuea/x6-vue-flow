@@ -12,7 +12,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
 import FlowGraph from './pages/Graph'
 import ToolBar from './pages/components/ToolBar/index.vue'
 import { Graph, Addon, Shape, Edge } from '@antv/x6'

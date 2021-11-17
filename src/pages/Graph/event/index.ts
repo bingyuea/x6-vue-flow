@@ -1,9 +1,9 @@
-import { FunctionExt } from '@antv/x6'
+import { Vue } from 'vue-property-decorator'
+import { FunctionExt, Graph } from '@antv/x6'
 import portsStyle from '../config/ports'
-class Event {
-  public static initEvent(graph) {
+class Event extends Vue {
+  public static initEvent(graph: Graph) {
     graph.on('node:contextmenu', ({ e, x, y, cell, view }) => {
-
       cell.attr('text/style/display', 'none')
       const elem = view.container.querySelector('.x6-edit-text') as HTMLElement
       if (elem) {
@@ -37,13 +37,6 @@ class Event {
           node.show()
         }
       })
-    })
-
-    graph.bindKey('backspace', () => {
-      const cells = graph.getSelectedCells()
-      if (cells.length) {
-        graph.removeCells(cells)
-      }
     })
   }
 

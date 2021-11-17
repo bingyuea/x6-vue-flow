@@ -1,4 +1,4 @@
-import { Graph, Addon, FunctionExt, Shape } from '@antv/x6'
+import { Graph, Addon, Edge, FunctionExt, Shape } from '@antv/x6'
 import { X6Image } from './shape/registerNode'
 import { X6Line } from './edge/registerEdge'
 console.log(X6Image)
@@ -15,8 +15,8 @@ import Event from './event/index'
 
 export default class graph {
   public static graph: Graph
+  public static line: Edge
   private static stencil: Addon.Stencil
-
   public static init() {
     this.graph = new Graph({
       container: document.querySelector('.x6-graph') as HTMLElement,
@@ -64,8 +64,9 @@ export default class graph {
         connectionPoint: 'anchor',
         dangling: false,
         router: 'manhattan',
-        createEdge() {
-          return new X6Line()
+        createEdge: () => {
+          this.line = new X6Line()
+          return this.line
         },
         validateConnection({ sourceView, targetView, sourceMagnet, targetMagnet }) {
           if (sourceView === targetView) {

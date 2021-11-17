@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="editor_toolbar_item" @click="handleClick">
+    <div class="editor_toolbar_item" @click="clickFn">
       <div command="undo" class="iconfont x-icon-undo" title="撤销（Ctrl + Z）"></div>
       <div command="redo" class="iconfont x-icon-redo" title="重做 (Ctrl + shift + Z)"></div>
       <div command="copy" class="iconfont x-icon-copy" title="复制 (Ctrl + C)"></div>
@@ -21,27 +21,43 @@
       <div command="lineWidth" class="iconfont x-icon-line-width" title="线条宽度"></div>
       <!--      <div command="flowBroken" class="iconfont x-icon-flow-broken"></div>-->
       <div command="selectAll" class="iconfont x-icon-select-all" title="全选 (Ctrl + A)"></div>
-      <div command="edit" class="iconfont x-icon-edit" title="编辑"></div>
+      <!--      <div command="edit" class="iconfont x-icon-edit" title="编辑"></div>-->
       <div command="upload" class="iconfont x-icon-upload" title="上传"></div>
-      <div command="download" class="iconfont x-icon-download" title="下载"></div>
+      <a-dropdown>
+        <div command="download" class="iconfont x-icon-download" title="下载"></div>
+        <a-menu slot="overlay">
+          <a-menu-item @click="saveFn('image')">
+            <div>下载为图片</div>
+          </a-menu-item>
+          <a-menu-item @click="saveFn('json')">
+            <div>下载为JSON数据</div>
+          </a-menu-item>
+        </a-menu>
+      </a-dropdown>
       <div command="fullScreen" class="iconfont x-icon-full-screen" title="全屏"></div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Mixins, Prop, Vue } from 'vue-property-decorator'
 import graph from '../../Graph/index'
-import { X6Line } from '../../Graph/edge/registerEdge'
+import { DataUri } from '@antv/x6'
+import dayjs from 'dayjs'
+import { ToolbarFunctions } from '@/mixins/toolbarFunctions'
+import Keyboard from '@/pages/Graph/event/keyboard'
 @Component({
   name: 'toolbarItem'
 })
-export default class extends Vue {
+export default class extends Mixins(ToolbarFunctions) {
   @Prop() private msg!: string
   GraphInstance: Record<string, any> = graph
   zoom: number = 1
 
   get graph() {
     return this.GraphInstance.graph
+  }
+  get line() {
+    return this.GraphInstance.line
   }
   async mounted() {
     await this.$nextTick()
@@ -51,93 +67,53 @@ export default class extends Vue {
     const graph = this.graph.on('scale', () => {
       this.zoom = graph.zoom()
     })
+    // 注册事件
+    Keyboard.init.call(this, this.graph)
   }
   setBackgroundColor(color: string) {
     this.graph.drawBackground({
       color
     })
   }
+  // todo fix
   setLineColor(color: string) {
-    this.graph.createEdge = () => {
-      return new X6Line({
-        attrs: {
-          line: {
-            stroke: '#f0f',
-            strokeWidth: 1,
-            targetMarker: {
-              name: 'classic',
-              size: 8
-            }
-          }
-        },
-        router: {
-          name: 'manhattan'
-        }
-      })
-    }
+    this.line.setAttrByPath('line/stroke', '#f0f')
   }
-  handleClick(e: Event) {
-    console.log(e)
+  saveFn(type: string) {
+    const cell = this.graph.getCells()
+    if (!cell.length) {
+      this.$message.error('画布内容为空！')
+      return
+    }
     const graph = this.graph
-    const commandName = e.target.getAttribute('command')
-    const zoom = graph.zoom()
-    const cells = graph.getSelectedCells()
-
-    switch (commandName) {
-      case 'undo':
-        graph.history.undo()
+    const now = dayjs().format('YYYYMMDDHHmmss')
+    switch (type) {
+      case 'image':
+        graph.toPNG((datauri: string) => {
+          DataUri.downloadDataUri(datauri, `${now}.png`)
+        })
         break
-      case 'redo':
-        graph.history.redo()
-        break
-      case 'copy':
-        if (!cells.length) {
-          this.$message.error('请选择要复制的节点/边！')
-          return
-        }
-        graph.copy(graph.getSelectedCells(), true, true)
-        this.$message.success('已复制')
-        break
-      case 'paste':
-        graph.paste(true)
-        this.$message.success('已粘贴')
-        break
-      case 'clear':
-        if (!cells.length) {
-          this.$message.error('请选择要删除的节点/边！')
-          return
-        }
-        graph.removeCells(graph.getSelectedCells())
-        break
-      case 'fit':
-        graph.zoomToFit()
-        break
-      case 'actualSize':
-        graph.zoomTo(1)
-        break
-      case 'fill':
-        return
-        break
-      case 'print':
-        graph.printPreview()
-        break
-      case 'zoomIn':
-        if (zoom > 1.5) {
-          this.$message.error('不能在放大了！')
-          return false
-        }
-        graph.zoom(0.1)
-        break
-      case 'zoomOut':
-        if (zoom < 0.5) {
-          this.$message.error('不能在缩小了！')
-          return false
-        }
-        graph.zoom(-0.1)
+      case 'json':
+        const json = graph.parseJSON(graph.toJSON())
+        const content = JSON.stringify(json)
+        console.log(content)
+        const blob = new Blob([content], {
+          type: 'application/json;charset=UTF-8'
+        })
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.textContent = 'download json'
+        link.href = url
+        link.download = `${now}.json`
+        link.click()
+        URL.revokeObjectURL(url)
         break
       default:
         break
     }
+  }
+  clickFn(e: Event) {
+    this.handleClick(this.graph, e.target.getAttribute('command'))
   }
 }
 </script>
