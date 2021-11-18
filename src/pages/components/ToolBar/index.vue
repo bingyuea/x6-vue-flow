@@ -1,6 +1,6 @@
 <template>
   <div class="toolbarOptions">
-    <div class="file_toolbar">
+    <!--    <div class="file_toolbar">
       <a-menu v-model="current" mode="horizontal">
         <a-menu-item key="mail">
           <a-icon type="folder" />
@@ -26,36 +26,26 @@
           帮助
         </a-menu-item>
       </a-menu>
-    </div>
+    </div>-->
 
     <div class="editor_toolbar">
-      <toolbarItem></toolbarItem>
-    </div>
-
-    <div>
-      <!--      <ToolbarButton command="delete" label="删除" text="&#xe624;"/>
-      <ToolbarButton command="zoomIn" label="放大" text="&#xe62b;"/>
-      <ToolbarButton command="zoomOut" label="缩小" text="&#xe62e;"/>
-      <ToolbarButton label="全屏" text="&#xe629;"/>
-      <ToolbarButton label="原大小" text="&#xe627;"/>
-      <ToolbarButton command="zoomToFit" label="自适应" text="&#xe625;"/>-->
+      <toolbarItem :graph="graph"></toolbarItem>
     </div>
   </div>
 </template>
 <script lang="ts">
-// import ToolbarButton from './ToolbarButton.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import toolbarItem from './toolbarItem.vue'
+import { Graph } from '@antv/x6'
 
 @Component({
   name: 'toolbar',
   components: {
-    // ToolbarButton,
     toolbarItem
   }
 })
 export default class extends Vue {
-  @Prop() private msg!: string
+  @Prop() public graph!: Graph
   current = ['mail']
 }
 </script>
@@ -69,8 +59,7 @@ export default class extends Vue {
     &_item {
       display: inline-block;
       min-width: 25px;
-      height: 15px;
-      line-height: 15px;
+      line-height: 1;
       vertical-align: middle;
       text-align: center;
       margin: 0 2px;

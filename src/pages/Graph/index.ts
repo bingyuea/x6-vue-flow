@@ -1,8 +1,4 @@
 import { Graph, Addon, Edge, FunctionExt, Shape } from '@antv/x6'
-import { X6Image } from './shape/registerNode'
-import { X6Line } from './edge/registerEdge'
-console.log(X6Image)
-console.log(X6Line)
 import graphData from './data'
 import fireWallIcon from '../icons/fireWall.png'
 import networkCloudIcon from '../icons/network_cloud.png'
@@ -17,6 +13,7 @@ export default class graph {
   public static graph: Graph
   public static line: Edge
   private static stencil: Addon.Stencil
+
   public static init() {
     this.graph = new Graph({
       container: document.querySelector('.x6-graph') as HTMLElement,
@@ -65,8 +62,10 @@ export default class graph {
         dangling: false,
         router: 'manhattan',
         createEdge: () => {
-          this.line = new X6Line()
-          return this.line
+          // todo fix
+          // this.graph.createNode({ shape: 'X6Line' })
+          // this.line = new Shape.Edge({ name: 'X6Line' })
+          // return this.graph.addEdges({ shape: 'X6Line' })
         },
         validateConnection({ sourceView, targetView, sourceMagnet, targetMagnet }) {
           if (sourceView === targetView) {
@@ -109,13 +108,15 @@ export default class graph {
         }
       },
       snapline: true,
-      keyboard: true,
+      keyboard: {
+        enabled: true,
+        global: true
+      },
       history: true,
       clipboard: true
     })
     this.stencil = Stencil.init(this.graph)
     this.initShape()
-    // this.initGraphShape()
     Event.initEvent(this.graph)
     return this.graph
   }

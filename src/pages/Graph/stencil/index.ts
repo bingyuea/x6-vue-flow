@@ -1,13 +1,14 @@
-import { Addon } from '@antv/x6'
+import { Addon, Graph } from '@antv/x6'
 
 export default class Stencil {
-  public static init(graph) {
+  public static init(graph: Graph) {
     const stencil = new Addon.Stencil({
+      title: 'x6-flow-vue',
       target: graph,
       stencilGraphWidth: 280,
       stencilGraphHeight: 600,
-      search: { rect: false },
-      center: true,
+      placeholder: '请输入物料名',
+      notFoundText: '暂无数据',
       groups: [
         {
           name: 'basic',
@@ -21,7 +22,11 @@ export default class Stencil {
         resizeToFit: true,
         center: true
       },
-      validateNode: () => {
+      search: (cell, keyword, groupName, stencil) => {
+        console.log(cell, keyword, groupName, stencil)
+        if (keyword) {
+          return cell.shape === 'rect'
+        }
         return true
       }
     })

@@ -6,8 +6,8 @@
       <div command="copy" class="iconfont x-icon-copy" title="复制 (Ctrl + C)"></div>
       <div command="paste" class="iconfont x-icon-paste" title="粘贴 (Ctrl + V)"></div>
       <div command="clear" class="iconfont x-icon-clear" title="删除 (Ctrl + Shift + C)"></div>
-      <div command="zoomIn" class="iconfont x-icon-zoom-in" title="放大 (Ctrl + +)"></div>
-      <div command="zoomOut" class="iconfont x-icon-zoom-out" title="缩小 (Ctrl + -)"></div>
+      <div command="zoomIn" class="iconfont x-icon-zoom-in" title="放大 (Ctrl + up)"></div>
+      <div command="zoomOut" class="iconfont x-icon-zoom-out" title="缩小 (Ctrl + down)"></div>
       <div command="fit" class="iconfont x-icon-fit" title="适应屏幕 (Ctrl + 0)"></div>
       <div command="actualSize" class="iconfont x-icon-actual-size" title="实际大小 (Ctrl + 1)"></div>
 
@@ -39,36 +39,30 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Mixins, Prop, Vue } from 'vue-property-decorator'
-import graph from '../../Graph/index'
+import { Component, Mixins, Prop, Vue, Inject } from 'vue-property-decorator'
 import { DataUri } from '@antv/x6'
 import dayjs from 'dayjs'
 import { ToolbarFunctions } from '@/mixins/toolbarFunctions'
+import { Graph } from '@antv/x6'
 import Keyboard from '@/pages/Graph/event/keyboard'
+
 @Component({
   name: 'toolbarItem'
 })
 export default class extends Mixins(ToolbarFunctions) {
-  @Prop() private msg!: string
-  GraphInstance: Record<string, any> = graph
+  @Prop() public graph!: Graph
   zoom: number = 1
 
-  get graph() {
-    return this.GraphInstance.graph
-  }
-  get line() {
-    return this.GraphInstance.line
-  }
   async mounted() {
     await this.$nextTick()
     this.init()
   }
   init() {
+    // 注册事件
+    Keyboard.init.call(this, this.graph)
     const graph = this.graph.on('scale', () => {
       this.zoom = graph.zoom()
     })
-    // 注册事件
-    Keyboard.init.call(this, this.graph)
   }
   setBackgroundColor(color: string) {
     this.graph.drawBackground({
@@ -77,7 +71,7 @@ export default class extends Mixins(ToolbarFunctions) {
   }
   // todo fix
   setLineColor(color: string) {
-    this.line.setAttrByPath('line/stroke', '#f0f')
+    // this.line.setAttrByPath('line/stroke', '#f0f')
   }
   saveFn(type: string) {
     const cell = this.graph.getCells()
