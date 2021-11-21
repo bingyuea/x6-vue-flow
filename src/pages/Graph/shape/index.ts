@@ -1,4 +1,4 @@
-import serverIcon from "@/pages/icons/server.png"
+import serverIcon from '@/pages/icons/server.png'
 import pcIcon from '@/pages/icons/pc.png'
 import switchIcon from '@/pages/icons/switch.png'
 import routerIcon from '@/pages/icons/router.png'

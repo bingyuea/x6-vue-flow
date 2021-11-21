@@ -20,10 +20,12 @@ export class ToolbarFunctions extends Vue {
           this.$message.error('请选择要复制的节点/边！')
           return
         }
+        // @ts-ignore
         graph.copy(graph.getSelectedCells(), true, true)
         this.$message.success('已复制')
         break
       case 'paste':
+        // @ts-ignore
         graph.paste(true)
         this.$message.success('已粘贴')
         break
@@ -41,11 +43,11 @@ export class ToolbarFunctions extends Vue {
         graph.zoomTo(1)
         break
       case 'selectAll':
-        const cell = this.graph.getCells()
-        this.graph.resetSelection(cell)
+        const cell = graph.getCells()
+        graph.resetSelection(cell)
         break
       case 'upload':
-        await this.$confirm({
+        this.$confirm({
           title: '提示',
           cancelText: '取消',
           okText: '确定',
@@ -56,13 +58,17 @@ export class ToolbarFunctions extends Vue {
             input.accept = '.json'
             input.click()
             input.onchange = () => {
+              // @ts-ignore
               const file = input.files[0]
               const reader = new FileReader()
               reader.readAsText(file, 'UTF-8')
               reader.onload = event => {
                 try {
+                  // @ts-ignore
                   const fileString = event.target.result
-                  this.graph.fromJSON(JSON.parse(fileString))
+                  if (typeof fileString === "string") {
+                    graph.fromJSON(JSON.parse(fileString))
+                  }
                 } catch (e) {
                   this.$message.error('上传JSON数据失败！')
                   console.error(' EDITOR ERROR:: upload JSON failed!', e)
