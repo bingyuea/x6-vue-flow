@@ -3,8 +3,7 @@ const circle = {
   magnet: true,
   stroke: '#000',
   strokeWidth: 2,
-  // fill: '#FFFFFF',
-  visibility: 'hidden',
+  visibility: 'hidden'
 }
 export default {
   style: {
@@ -17,8 +16,7 @@ export default {
       attrs: {
         circle: {
           ...circle,
-          fillOpacity: 1,
-          strokeOpacity: 1
+          visibility: 'visible'
         }
       }
     },
@@ -26,8 +24,7 @@ export default {
       attrs: {
         circle: {
           ...circle,
-          fillOpacity: 0,
-          strokeOpacity: 0
+          visibility: 'hidden'
         }
       }
     }

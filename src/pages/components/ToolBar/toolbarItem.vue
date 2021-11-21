@@ -107,6 +107,7 @@ export default class extends Mixins(ToolbarFunctions) {
     }
   }
   clickFn(e: Event) {
+    // @ts-ignore
     this.handleClick(this.graph, e.target.getAttribute('command'))
   }
 }

@@ -1,13 +1,7 @@
 import { Graph, Addon, Edge, FunctionExt, Shape } from '@antv/x6'
-import graphData from './data'
-import fireWallIcon from '../icons/fireWall.png'
-import networkCloudIcon from '../icons/network_cloud.png'
-import pcIcon from '../icons/pc.png'
-import routerIcon from '../icons/router.png'
-import serverIcon from '../icons/server.png'
-import switchIcon from '../icons/switch.png'
 import Stencil from './stencil/index'
 import Event from './event/index'
+import x6Shape from './shape/index'
 
 export default class graph {
   public static graph: Graph
@@ -116,64 +110,8 @@ export default class graph {
       clipboard: true
     })
     this.stencil = Stencil.init(this.graph)
-    this.initShape()
+    x6Shape.init(this.graph, this.stencil)
     Event.initEvent(this.graph)
     return this.graph
-  }
-
-  private static initShape() {
-    const { graph } = this
-
-    const nodes: Node[] = []
-    ;[
-      {
-        name: '服务器',
-        img: serverIcon
-      },
-
-      {
-        name: '终端用户',
-        img: pcIcon
-      },
-      {
-        name: '交换机',
-        img: switchIcon
-      },
-      {
-        name: '路由器',
-        img: routerIcon
-      },
-      {
-        name: '防火墙',
-        img: fireWallIcon
-      },
-      {
-        name: '广域网',
-        img: networkCloudIcon
-      }
-    ].forEach(el => {
-      nodes.push(
-        graph.createNode({
-          shape: 'X6Image',
-          attrs: {
-            image: {
-              'xlink:href': el.img
-            }
-          }
-        })
-      )
-    })
-
-    this.stencil.load(nodes, 'basic')
-  }
-
-  private static initGraphShape() {
-    this.graph.fromJSON(graphData as any)
-  }
-
-  private static showPorts(ports: NodeListOf<SVGAElement>, show: boolean) {
-    for (let i = 0, len = ports.length; i < len; i = i + 1) {
-      ports[i].style.visibility = show ? 'visible' : 'hidden'
-    }
   }
 }

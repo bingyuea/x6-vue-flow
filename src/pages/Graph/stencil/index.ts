@@ -14,7 +14,13 @@ export default class Stencil {
           name: 'basic',
           title: '基础节点',
           collapsable: true,
-          graphHeight: 1600
+          graphHeight: 400
+        },
+        {
+          name: 'image',
+          title: '图片节点',
+          collapsable: true,
+          graphHeight: 400
         }
       ],
       layoutOptions: {
@@ -23,9 +29,8 @@ export default class Stencil {
         center: true
       },
       search: (cell, keyword, groupName, stencil) => {
-        console.log(cell, keyword, groupName, stencil)
         if (keyword) {
-          return cell.shape === 'rect'
+          return cell.shape.includes(keyword)
         }
         return true
       }

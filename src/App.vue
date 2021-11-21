@@ -11,14 +11,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Provide } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import FlowGraph from './pages/Graph'
 import ToolBar from './pages/components/ToolBar/index.vue'
-import { Graph, Addon, Shape, Edge } from '@antv/x6'
-import { FlowChartRect, NodeGroup, EdgeArrow } from './pages/Graph/shape'
+import { Addon } from '@antv/x6'
 import registerNode from '@/pages/Graph/shape/registerNode'
 import registerEdge from '@/pages/Graph/edge/registerEdge'
-import Keyboard from '@/pages/Graph/event/keyboard'
 const { Dnd } = Addon
 @Component({
   name: 'x6Editor',
@@ -59,7 +57,7 @@ export default class extends Vue {
 .x6_editor {
   height: 100%;
   width: 100%;
-  @toolbar_height: 36px;
+  @toolbar_height: 35px;
   @sidebar_width: 280px;
 
   &_toolbar {
